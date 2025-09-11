@@ -6,6 +6,10 @@
 #include "GameFramework/Actor.h"
 #include "Item.generated.h"
 
+// forward declaration
+class UNiagaraComponent;
+class UNiagaraSystem;
+
 UCLASS()
 class DMS332_API AItem : public AActor {
   GENERATED_BODY()
@@ -29,6 +33,9 @@ protected:
   float SineAmplitude = 1.f;
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters")
   float SineRate = 1.f;
+
+  UPROPERTY(EditAnywhere)
+  UNiagaraComponent *EmbersEffect;
 
 private:
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly,

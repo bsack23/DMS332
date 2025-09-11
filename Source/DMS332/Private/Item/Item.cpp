@@ -2,6 +2,8 @@
 
 #include "Item/Item.h"
 #include "Math/UnrealMathUtility.h"
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
 
 // Sets default values
 AItem::AItem() {
@@ -11,6 +13,9 @@ AItem::AItem() {
   ItemMesh =
       CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Item Mesh Component"));
   RootComponent = ItemMesh;
+
+  EmbersEffect = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Embers"));
+  EmbersEffect->SetupAttachment(GetRootComponent());
 }
 
 // Called when the game starts or when spawned
