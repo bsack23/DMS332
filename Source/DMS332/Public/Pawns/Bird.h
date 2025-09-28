@@ -1,13 +1,19 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
+// turn off annoying vscode reordering of include files
 // clang-format off
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Bird.generated.h"
 
+// forward declarations
 class UCapsuleComponent;
 class USkeletalMeshComponent;
+// these two for the camera and arm
+class USpringArmComponent;
+class UCameraComponent;
+
 UCLASS()
 class DMS332_API ABird : public APawn {
   GENERATED_BODY()
@@ -32,4 +38,10 @@ private:
 
   UPROPERTY(VisibleAnywhere)
   USkeletalMeshComponent *BirdMesh;
+
+  UPROPERTY(VisibleAnywhere)
+  USpringArmComponent *SpringArm;
+
+  UPROPERTY(VisibleAnywhere)
+  UCameraComponent *ViewCamera;
 };
