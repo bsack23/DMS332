@@ -30,6 +30,7 @@ public:
   virtual void Tick(float DeltaTime) override;
 
   // Called to bind functionality to input
+  // note forward declaration inline! we can do that!
   virtual void SetupPlayerInputComponent(
       class UInputComponent *PlayerInputComponent) override;
 

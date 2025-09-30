@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 // headers for input stuff
+// make sure that EnhancedInput is added to DMS332.Build.cs before this include
 #include "Components/InputComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
@@ -47,6 +48,7 @@ ABird::ABird() {
 void ABird::BeginPlay() {
   Super::BeginPlay();
   // casting our new Player Controller
+  // a cast is a way to explicitly convert a value from one type to another
   if (APlayerController *PlayerController =
           Cast<APlayerController>(GetController())) {
     // if the cast is successful
@@ -56,7 +58,9 @@ void ABird::BeginPlay() {
                 PlayerController->GetLocalPlayer())) {
       Subsystem->AddMappingContext(BirdMappingContext, 0);
     }
-    // hmm? maybe here?
+    // in Pawn.h: if true, this Pawn's pitch (yaw) will be updated to match the
+    // Controller's ControlRotation pitch (yaw), if controlled by a
+    // PlayerController.
     bUseControllerRotationPitch = true;
     bUseControllerRotationYaw = true;
   }
@@ -67,18 +71,27 @@ void ABird::Tick(float DeltaTime) { Super::Tick(DeltaTime); }
 
 // set up the Action Values so they can move the Pawn
 void ABird::Move(const FInputActionValue &Value) {
+  // input from keyboard is 1D - forward & back
+  // so all we need is a float value
   const float DirectionValue = Value.Get<float>();
+  // check for a valid controller and non-zero value
   if (Controller && (DirectionValue != 0.f)) {
+    // get the current direction as a vector
     FVector Forward = GetActorForwardVector();
+    // do vector math to move
     AddMovementInput(Forward, DirectionValue);
   }
 }
 
 // set up the Action Values so the Pawn can look around while moving
 void ABird::Look(const FInputActionValue &Value) {
+  // input from mouse's x & y is 2D - make a vector
   const FVector2D LookAxisValue = Value.Get<FVector2D>();
+  // check for valid controller
   if (GetController()) {
+    // turn / look left-right
     AddControllerYawInput(LookAxisValue.X);
+    // turn / look up-down
     AddControllerPitchInput(LookAxisValue.Y);
   }
 }
@@ -86,7 +99,7 @@ void ABird::Look(const FInputActionValue &Value) {
 // Called to bind functionality to input
 void ABird::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) {
   Super::SetupPlayerInputComponent(PlayerInputComponent);
-  // another type of cast
+  // CastChecked: another type of cast - does the cast and checks for null ptr
   if (UEnhancedInputComponent *EnhancedInputComponent =
           CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
     EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered,
