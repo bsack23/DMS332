@@ -32,7 +32,7 @@ ABird::ABird() {
   BirdMesh->SetupAttachment(GetRootComponent());
   // Uncomment this if we want Player0 will auto-possess this Pawn
   // (E means that it's an element of type Enum - an enumerated list)
-  AutoPossessPlayer = EAutoReceiveInput::Player0;
+  // AutoPossessPlayer = EAutoReceiveInput::Player0;
 
   // make a spring arm for the camera and attach it to the Capsule
   SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
