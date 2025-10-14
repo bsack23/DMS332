@@ -46,6 +46,7 @@ protected:
   UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
   UInputAction *LookingAction;
 
+  
   // not forward declared - see InputActionValue include above
   void Move(const FInputActionValue &Value);
   void Look(const FInputActionValue &Value);
@@ -57,4 +58,13 @@ private:
 
   UPROPERTY(VisibleAnywhere)
   UCameraComponent *ViewCamera;
+
+  /* jump input action
+  this is in the private section but is accessible to blueprint
+  because of the AllowPrivateAccess tag */
+  UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input,
+            meta = (AllowPrivateAccess = "true"))
+  UInputAction *JumpAction;
+  // end jump input action
+
 };

@@ -113,5 +113,13 @@ void ABaseCharacter::SetupPlayerInputComponent(
                                        this, &ABaseCharacter::Move);
     EnhancedInputComponent->BindAction(LookingAction, ETriggerEvent::Triggered,
                                        this, &ABaseCharacter::Look);
+    //  jumping
+    // note that the Jump and StopJumping functions are defined in the
+    // Character parent class, not our BaseCharacter
+    EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this,
+                                       &ACharacter::Jump);
+    EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed,
+                                       this, &ACharacter::StopJumping);
+    // end jumping
   }
 }
