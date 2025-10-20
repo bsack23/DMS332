@@ -68,7 +68,6 @@ void ALightSwitch::OnOverlapEnd(class UPrimitiveComponent *OverlappedComp,
   if (OtherActor && (OtherActor != this) && OtherComp) {
     // turn light off
     PointLight->SetVisibility(false);
-    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red,
-                                     TEXT("Overlap Begin"));
+    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap End"));
   }
 }

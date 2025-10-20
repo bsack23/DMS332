@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Item/Item.h"
+#include "Components/SphereComponent.h"
 #include "Math/UnrealMathUtility.h"
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
@@ -16,6 +17,15 @@ AItem::AItem() {
 
   EmbersEffect = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Embers"));
   EmbersEffect->SetupAttachment(GetRootComponent());
+
+  // create sphere for overlap and attach it to root component
+  Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
+  Sphere->InitSphereRadius(150.0f);
+  Sphere->SetupAttachment(RootComponent);
+  // set up a notification for when this component
+  // overlaps something
+  Sphere->OnComponentBeginOverlap.AddDynamic(this, &AItem::OnOverlapBegin);
+  Sphere->OnComponentEndOverlap.AddDynamic(this, &AItem::OnOverlapEnd);
 }
 
 // Called when the game starts or when spawned
@@ -34,7 +44,36 @@ void AItem::Tick(float DeltaTime) {
   float SineValue = SineAmplitude * FMath::Sin(RunningTime * SineRate);
   //   AddActorWorldOffset(FVector(0.f, 0.f, SineValue));
 
-  float PerlinValue = 1.f * FMath::PerlinNoise1D(RunningTime);
+  // float PerlinValue = 1.f * FMath::PerlinNoise1D(RunningTime);
+  // AddActorWorldOffset(FVector(0.f, PerlinValue, SineValue));
+}
 
-  AddActorWorldOffset(FVector(0.f, PerlinValue, SineValue));
+// our Overlap Begin and end functions
+void AItem::OnOverlapBegin(class UPrimitiveComponent *OverlappedComp,
+                           class AActor *OtherActor,
+                           class UPrimitiveComponent *OtherComp,
+                           int32 OtherBodyIndex, bool bFromSweep,
+                           const FHitResult &SweepResult) {
+  if (OtherActor && (OtherActor != this) && OtherComp) {
+    // do something
+    // debug message why not?
+    if (GEngine) {
+      /**  syntax AddOnScreenDebugMessage(index, time to display, color,
+                                     text)
+                                     */
+      const FString OtherActorName = OtherActor->GetName();
+      GEngine->AddOnScreenDebugMessage(1, 2.f, FColor::Red,
+                                       TEXT("Overlap Begin " + OtherActorName));
+    }
+  }
+}
+
+void AItem::OnOverlapEnd(class UPrimitiveComponent *OverlappedComp,
+                         class AActor *OtherActor,
+                         class UPrimitiveComponent *OtherComp,
+                         int32 OtherBodyIndex) {
+  if (OtherActor && (OtherActor != this) && OtherComp) {
+    // do something
+    GEngine->AddOnScreenDebugMessage(1, 2.f, FColor::Red, TEXT("Overlap End"));
+  }
 }

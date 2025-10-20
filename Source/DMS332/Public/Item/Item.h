@@ -21,6 +21,26 @@ public:
   virtual void Tick(float DeltaTime) override;
 
 protected:
+  /** sphere component - forward declared */
+  UPROPERTY(VisibleAnywhere, Category = "Switch Components")
+  class USphereComponent *Sphere;
+
+  // add 'virtual' to these so they can be customized in child classes
+  // like 'Utensil'
+  UFUNCTION()
+  virtual void OnOverlapBegin(class UPrimitiveComponent *OverlappedComp,
+                              class AActor *OtherActor,
+                              class UPrimitiveComponent *OtherComp,
+                              int32 OtherBodyIndex, bool bFromSweep,
+                              const FHitResult &SweepResult);
+
+  /** called when something leaves the sphere component */
+  UFUNCTION()
+  virtual void OnOverlapEnd(class UPrimitiveComponent *OverlappedComp,
+                            class AActor *OtherActor,
+                            class UPrimitiveComponent *OtherComp,
+                            int32 OtherBodyIndex);
+
   // Called when the game starts or when spawned
   virtual void BeginPlay() override;
 
