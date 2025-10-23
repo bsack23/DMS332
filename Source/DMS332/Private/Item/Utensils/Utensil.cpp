@@ -5,12 +5,15 @@
 // need to include header for BaseCharacter because we're attaching
 // this to a socket on its skeletal mesh
 #include "Characters/BaseCharacter.h"
+#include "Components/SphereComponent.h"
+#include "NiagaraComponent.h"
 
+// the constructor we declared in Utensil.h
 AUtensil::AUtensil() {
   // collision presets set to NoCollision to avoid strange motion ...
   ItemMesh->SetCollisionProfileName(FName("NoCollision"));
   // change radius of Sphere to match the mesh size
-  Sphere->InitSphereRadius(40.0f);
+  Sphere->InitSphereRadius(30.0f);
 }
 
 void AUtensil::OnOverlapBegin(class UPrimitiveComponent *OverlappedComp,
@@ -31,8 +34,11 @@ void AUtensil::OnOverlapBegin(class UPrimitiveComponent *OverlappedComp,
     // do the attachment
     ItemMesh->AttachToComponent(BaseCharacter->GetMesh(), TransformRules,
                                 FName("RightHandSocket"));
-    // Stop the rotation
+    // Stop the rotation and hovering
     RotationRate = 0;
+    SineAmplitude = 0;
+    // disable niagara effect, if any
+    EmbersEffect->Deactivate();
   }
 }
 

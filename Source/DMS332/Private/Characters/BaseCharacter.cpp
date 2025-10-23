@@ -121,5 +121,19 @@ void ABaseCharacter::SetupPlayerInputComponent(
     EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed,
                                        this, &ACharacter::StopJumping);
     // end jumping
+    // sprinting
+    EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started,
+                                       this, &ABaseCharacter::BeginSprint);
+    EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed,
+                                       this, &ABaseCharacter::EndSprint);
+    // end sprinting
   }
+}
+
+void ABaseCharacter::BeginSprint() {
+  GetCharacterMovement()->MaxWalkSpeed = 300.0f;
+}
+
+void ABaseCharacter::EndSprint() {
+  GetCharacterMovement()->MaxWalkSpeed = 150.f;
 }

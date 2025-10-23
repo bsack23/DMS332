@@ -46,7 +46,15 @@ protected:
   UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
   UInputAction *LookingAction;
 
-  
+  UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+  UInputAction *SprintAction;
+
+  //Sets Character Movement Speed to Sprint values.
+  void BeginSprint();
+		
+  //Sets Character Movement Speed back to default speed values.
+  void EndSprint();
+
   // not forward declared - see InputActionValue include above
   void Move(const FInputActionValue &Value);
   void Look(const FInputActionValue &Value);
