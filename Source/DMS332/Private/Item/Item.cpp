@@ -61,9 +61,10 @@ void AItem::OnOverlapBegin(class UPrimitiveComponent *OverlappedComp,
       /**  syntax AddOnScreenDebugMessage(index, time to display, color,
                                      text)
                                      */
-      const FString OtherActorName = OtherActor->GetName();
+      /**const FString OtherActorName = OtherActor->GetName();
       GEngine->AddOnScreenDebugMessage(1, 2.f, FColor::Red,
                                        TEXT("Overlap Begin " + OtherActorName));
+                                       */
     }
   }
 }
@@ -74,6 +75,8 @@ void AItem::OnOverlapEnd(class UPrimitiveComponent *OverlappedComp,
                          int32 OtherBodyIndex) {
   if (OtherActor && (OtherActor != this) && OtherComp) {
     // do something
+    /**
     GEngine->AddOnScreenDebugMessage(1, 2.f, FColor::Red, TEXT("Overlap End"));
+    */
   }
 }

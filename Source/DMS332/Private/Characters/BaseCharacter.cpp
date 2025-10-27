@@ -12,6 +12,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 // for GetCharacterMovement() below
+#include "Animation/AnimMontage.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
@@ -127,6 +128,8 @@ void ABaseCharacter::SetupPlayerInputComponent(
     EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed,
                                        this, &ABaseCharacter::EndSprint);
     // end sprinting
+    EnhancedInputComponent->BindAction(SwingAction, ETriggerEvent::Triggered,
+                                       this, &ABaseCharacter::Swing);
   }
 }
 
@@ -136,4 +139,33 @@ void ABaseCharacter::BeginSprint() {
 
 void ABaseCharacter::EndSprint() {
   GetCharacterMovement()->MaxWalkSpeed = 150.f;
+}
+
+void ABaseCharacter::Swing() {
+  if (CharacterState == ECharacterState::ECS_Unequipped)
+    return;
+  // Make a local AnimInstance pointer for our character's mesh
+  UAnimInstance *AnimInstance = GetMesh()->GetAnimInstance();
+  // check for successful instance and presence of a montage
+  if (AnimInstance && SwingMontage) {
+    // play the montage
+    AnimInstance->Montage_Play(SwingMontage);
+    // local variable to choose a random int
+    int32 Selection = FMath::RandRange(0, 1);
+    // make an empty FName to hold a SectionName
+    FName SectionName = FName();
+    // assign value depending on Selection
+    switch (Selection) {
+    case 0:
+      SectionName = FName("Swing1");
+      break;
+    case 1:
+      SectionName = FName("Swing2");
+      break;
+    default:
+      SectionName = FName("Swing1");
+    }
+    // jump to the selected montage section
+    AnimInstance->Montage_JumpToSection(SectionName, SwingMontage);
+  }
 }

@@ -29,5 +29,7 @@ void UBaseAnimInstance::NativeUpdateAnimation(float DeltaTime) {
     GroundSpeed = UKismetMathLibrary::VSizeXY(BaseCharacterMovement->Velocity);
     // get the value of the IsFalling boolean
     IsFalling = BaseCharacterMovement->IsFalling();
+    // check character state here
+    CharacterState = BaseCharacter->GetCharacterState();
   }
 }

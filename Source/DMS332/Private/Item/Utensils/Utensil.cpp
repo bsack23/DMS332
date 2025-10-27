@@ -34,11 +34,14 @@ void AUtensil::OnOverlapBegin(class UPrimitiveComponent *OverlappedComp,
     // do the attachment
     ItemMesh->AttachToComponent(BaseCharacter->GetMesh(), TransformRules,
                                 FName("RightHandSocket"));
+    BaseCharacter->SetCharacterState(ECharacterState::ECS_EquippedRightHanded);
     // Stop the rotation and hovering
     RotationRate = 0;
     SineAmplitude = 0;
     // disable niagara effect, if any
     EmbersEffect->Deactivate();
+
+    // CharacterState = ECharacterState::ECS_EquippedRightHanded;
   }
 }
 

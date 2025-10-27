@@ -5,6 +5,7 @@
 // clang-format off
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "CharacterTypes.h"
 #include "BaseAnimInstance.generated.h"
 
 /**
@@ -32,4 +33,7 @@ public:
   // 2. are we falling through the air?
   UPROPERTY(BlueprintReadOnly, Category = Movement)
   bool IsFalling;
+  
+  UPROPERTY(BlueprintReadOnly, Category = "Movement | Character Types")
+  ECharacterState CharacterState;
 };

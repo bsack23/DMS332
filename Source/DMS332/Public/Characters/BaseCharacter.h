@@ -7,6 +7,7 @@
 #include "InputActionValue.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "CharacterTypes.h"
 #include "BaseCharacter.generated.h"
 
 class USkeletalMeshComponent;
@@ -16,6 +17,8 @@ class UCameraComponent;
 // forward declarations for input stuff
 class UInputMappingContext;
 class UInputAction;
+class UAnimMontage;
+
 
 UCLASS()
 class DMS332_API ABaseCharacter : public ACharacter
@@ -49,6 +52,9 @@ protected:
   UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
   UInputAction *SprintAction;
 
+  UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+  UInputAction *SwingAction;
+
   //Sets Character Movement Speed to Sprint values.
   void BeginSprint();
 		
@@ -59,13 +65,18 @@ protected:
   void Move(const FInputActionValue &Value);
   void Look(const FInputActionValue &Value);
 
+  void Swing();
+
+  UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+  ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
+  
 private:
 
   UPROPERTY(VisibleAnywhere)
   USpringArmComponent *SpringArm;
 
   UPROPERTY(VisibleAnywhere)
-  UCameraComponent *ViewCamera;
+  UCameraComponent* ViewCamera;
 
   /* jump input action
   this is in the private section but is accessible to blueprint
@@ -75,4 +86,11 @@ private:
   UInputAction *JumpAction;
   // end jump input action
 
+  UPROPERTY(EditDefaultsOnly, Category = Montage)
+  UAnimMontage *SwingMontage;
+
+  public:
+// public getters and setters
+  FORCEINLINE void SetCharacterState(ECharacterState NewState) { CharacterState = NewState; }
+  FORCEINLINE ECharacterState GetCharacterState() const { return CharacterState; }
 };
