@@ -1,4 +1,4 @@
-# Visual Studio 2015 user specific files
+# Visual Studio user specific files
 .vs/
 .vscode/
 
@@ -69,18 +69,16 @@ Build/*
 #Saved/*
 
 # Compiled source files for the engine to use
-#Intermediate/*
 Plugins/**/Intermediate/*
-
-# Cache files for the editor to use
-DerivedDataCache/*
-
+# Locally built binary files - don't need 'em
 /[Bb]uild
 /[Bb]uilds
 /Binaries
-/DerivedDataCache
 /Intermediate
+# Cache files for the editor to use
+/DerivedDataCache
 /Saved
-
+# Don't need to save this
 Content/StarterContent/*
+# Local imported resources can be huge
 Content/ImportedContent/*
