@@ -70,6 +70,11 @@ protected:
   UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
   ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
   
+  UPROPERTY(EditAnywhere, BlueprintReadWrite)
+  int32 Coins;
+
+  // void AddCoins();
+  // int32 GetCoins();
 private:
 
   UPROPERTY(VisibleAnywhere)
@@ -90,7 +95,10 @@ private:
   UAnimMontage *SwingMontage;
 
   public:
-// public getters and setters
+  // public getters and setters
   FORCEINLINE void SetCharacterState(ECharacterState NewState) { CharacterState = NewState; }
   FORCEINLINE ECharacterState GetCharacterState() const { return CharacterState; }
+
+  FORCEINLINE void SetCoins() { Coins++; }
+  FORCEINLINE int32 GetCoins() { return Coins; }
 };

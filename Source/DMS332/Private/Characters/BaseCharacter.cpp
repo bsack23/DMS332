@@ -169,3 +169,7 @@ void ABaseCharacter::Swing() {
     AnimInstance->Montage_JumpToSection(SectionName, SwingMontage);
   }
 }
+
+// void ABaseCharacter::AddCoins() { Coins++; }
+
+// int32 ABaseCharacter::GetCoins() { return Coins; }
