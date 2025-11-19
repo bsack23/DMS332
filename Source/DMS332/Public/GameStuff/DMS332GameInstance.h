@@ -4,13 +4,13 @@
 // clang-format off
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
-#include "DMSGameInstance.generated.h"
+#include "DMS332GameInstance.generated.h"
 
 /**
  *
  */
 UCLASS()
-class DMS332_API UDMSGameInstance : public UGameInstance {
+class DMS332_API UDMS332GameInstance : public UGameInstance {
   GENERATED_BODY()
 
 protected:
